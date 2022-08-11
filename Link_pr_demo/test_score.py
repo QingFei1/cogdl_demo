@@ -1,10 +1,6 @@
-import codecs
-import json
-
 import torch
 from torch import nn
 import numpy as np
-import operator
 import faiss
 
 
@@ -68,7 +64,7 @@ def smi(input_en):
 
     h=entity2id[input_en]
     head = torch.tensor(entity_dict[h]).reshape(1,-1).numpy()
-    index = faiss.IndexFlatIP(300)
+    index = faiss.IndexFlatIP(300) #embedding_size
     index.add(np.ascontiguousarray(entity_embedding))
     distance, match_idx = index.search(head, 10)
     pre=[]
