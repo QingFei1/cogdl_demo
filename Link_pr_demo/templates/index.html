@@ -43,31 +43,19 @@
 				<p>知识图谱demo展示
 					<br>
 				</p>
-				<div class="search-wraper" role="search">
-					<div class="form-group">
-						<form id="sub" action="/kgdemo/graph" method="post">
-							<input type="text" id="entity" name="entity" class="form-control search clearable" placeholder="输入想查询的实体~展示图谱关系 如'清华大学' " required="required" autocomplete="off" autofocus="on" tabindex="0" autocorrect="off" autocapitalize="off" spellcheck="false">
-
-						<button type="submit"  style="position: absolute;top: 0%;right: 12px;margin-top: -5px;outline: 0;background-color: transparent; border: 0;">
-							<i class="fa fa-search"></i>
-						</button>
-						</form>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
 
 </header>
-<p style="color:black;margin: 0 auto; text-align: center;font-family:Times New Roman;font-size: 25px">
-请先在上方查询实体，再利用查询到的图谱中的实体和关系进行链接预测会更准确~</p>
+
 <main class="packages-list-container" id="all-packages">
 	<div class="container">
 	
 		<div class="list-group packages" id="common-packages">
 			
 			<a class="package list-group-item">
-                <p>数据集仅抽取了'电影','历史','动物','成语','地点','体育','医学','自然','科学','学校','音乐','文学','游戏'类别的部分数据，可能会有查询不到的情况</p>
+                <p>数据集仅抽取了1500条数据</p>
 				<div class="row">
 					<div class="col-md-2">
 						<h2 class="package-name">链接预测</h2>
@@ -75,8 +63,8 @@
 					</div>
 					<div class="col-md-10">
 						    <form action="/kgdemo/pre_tail" method="post" class="in_1">
-		<input type="text" id="entity_pre" name="entity_test" class="form-control search clearable" placeholder="输入想查询的实体~如'清华大学' '周杰伦' '赌神' " required="required" autocomplete="off" autofocus="on" tabindex="0" autocorrect="off" autocapitalize="off" spellcheck="false">
-        <input type="text" id="relation_pre" name="relation_test" class="form-control search clearable" placeholder="输入该实体的对应的关系~如'知名校友' '代表作品' '主演' " required="required" autocomplete="off" autofocus="on" tabindex="0" autocorrect="off" autocapitalize="off" spellcheck="false">
+		<input type="text" id="entity_pre" name="entity_test" class="form-control search clearable" placeholder="输入想查询的实体~如'灵峰'" required="required" autocomplete="off" autofocus="on" tabindex="0" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <input type="text" id="relation_pre" name="relation_test" class="form-control search clearable" placeholder="输入该实体的对应的关系~如'描述'" required="required" autocomplete="off" autofocus="on" tabindex="0" autocorrect="off" autocapitalize="off" spellcheck="false">
         <p><input type="submit" id="buttonid1" class="form-control search clearable" value="确认"></p>
     </form>
 					</div>
@@ -94,7 +82,7 @@
 
 					<div class="col-md-10">
 							    <form action="/kgdemo/pre_smi" method="post" class="in_2">
-		<input type="text" id="entity_pre_smi" name="entity_smi" class="form-control search clearable" placeholder="输入想查询的实体~如'三顾茅庐' '机器学习' " required="required" autocomplete="off" autofocus="on" tabindex="0" autocorrect="off" autocapitalize="off" spellcheck="false">
+		<input type="text" id="entity_pre_smi" name="entity_smi" class="form-control search clearable" placeholder="输入想查询的实体~如'灵峰'" required="required" autocomplete="off" autofocus="on" tabindex="0" autocorrect="off" autocapitalize="off" spellcheck="false">
         <p><input type="submit" id="buttonid2" class="form-control search clearable" value="确认"></p>
     </form>
 					</div>
@@ -103,9 +91,9 @@
 
 
 
-			<div id="a" entity="{{entity}}" select="{{select}}" key="{{key}}" style="display:none"></div>
-			<div id="b" entity="{{entity}}" relation="{{relation}}" select="{{select}}" tail="{{tail}}" key="{{key}}" style="display:none"></div>
-			<div id="c" entity="{{entity}}" select="{{select}}" pre_smi="{{pre_smi}}" key="{{key}}" style="display:none"></div>
+			
+			<div id="a" entity="{{entity}}" relation="{{relation}}" select="{{select}}" tail="{{tail}}" key="{{key}}" style="display:none"></div>
+			<div id="b" entity="{{entity}}" select="{{select}}" pre_smi="{{pre_smi}}" key="{{key}}" style="display:none"></div>
 <style>.link {  fill: none;  stroke: #666;  stroke-width: 1.5px;}#licensing {  fill: green;}.link.licensing {  stroke: green;}.link.resolved {  stroke-dasharray: 0,2 1;}circle {  fill: #ccc;  stroke: #333;  stroke-width: 1.5px;}text {  font: 12px Microsoft YaHei;  pointer-events: none;  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;}.linetext {    font-size: 12px Microsoft YaHei;}</style>
 
 
@@ -119,33 +107,20 @@
  
 	var select;
     
-var select = parseInt(document.getElementById('a').getAttribute('selelct'));
+var select =parseInt(document.getElementById('a').getAttribute('select'));
 var select =parseInt(document.getElementById('b').getAttribute('select'));
-var select =parseInt(document.getElementById('c').getAttribute('select'));
    
 function link_result(){
 
-	if(select===1){
+    if(select===1){
 var key = document.getElementById('a').getAttribute('key');
-if(key=='0'){
-	alert("输入的实体匹配不到~换一个试试吧");
-	return;
-}
-
-var result_1 = document.getElementById('a').getAttribute('entity');
-var links= JSON.parse(result_1);
-return links;
-}
-
-else if(select===2){
-var key = document.getElementById('b').getAttribute('key');
 if(key=='0'){
  alert("输入的实体-关系数据集中暂时还未收录，换一个试试吧~");
  return;
 }
-var entity = document.getElementById('b').getAttribute('entity');
-var relation = document.getElementById('b').getAttribute('relation');
-var tail = document.getElementById('b').getAttribute('tail');
+var entity = document.getElementById('a').getAttribute('entity');
+var relation = document.getElementById('a').getAttribute('relation');
+var tail = document.getElementById('a').getAttribute('tail');
 
 var tail= JSON.parse(tail);
 var links=[];
@@ -155,14 +130,14 @@ for(var i=0;i<tail.length;i++){
 return links;
 }
 
-else if(select===3){
-var key = document.getElementById('a').getAttribute('key');
+else if(select===2){
+var key = document.getElementById('b').getAttribute('key');
 if(key=='0'){
  alert("输入的实体数据集中暂时还没有，换一个试试吧~");
  return;
 }
-var entity = document.getElementById('c').getAttribute('entity');
-var pre_smi = document.getElementById('c').getAttribute('pre_smi');
+var entity = document.getElementById('b').getAttribute('entity');
+var pre_smi = document.getElementById('b').getAttribute('pre_smi');
 var pre_smi= JSON.parse(pre_smi);
 var links=[];
 for(var i=0;i<pre_smi.length;i++){
